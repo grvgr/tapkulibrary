@@ -37,7 +37,7 @@
 
 
 @implementation TKCoverflowCoverView
-@synthesize baseline,gradientLayer;
+@synthesize baseline,gradientLayer,flipView;
 
 
 - (id) initWithFrame:(CGRect)frame {
@@ -61,7 +61,7 @@
     gradientLayer.frame = CGRectMake(0, self.frame.size.width, self.frame.size.width, self.frame.size.width);
     [self.layer addSublayer:gradientLayer];
     
-    
+	flipView = [[UIView alloc] initWithFrame:self.frame];    
     
     return self;
 }
@@ -97,7 +97,37 @@
 	[self setNeedsDisplay];
 }
 
-
+- (void)flipCover:(UIView *)view {
+	// Save selected view state before animation
+	CGRect flippedViewFrame = CGRectMake(
+										 (flipView.frame.size.width-view.frame.size.width)/2,
+										 flipView.frame.origin.y,
+										 view.frame.size.width,
+										 view.frame.size.height);
+	view.frame = flippedViewFrame;
+    
+	double animationDuration = 0.8;
+    
+	// Animate flip of cover image out of view
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDuration:animationDuration];
+	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+						   forView:self
+							 cache:YES];
+	[imageView removeFromSuperview];
+	[UIView commitAnimations];
+    
+	// Animate flip of flipped view into view
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDuration:animationDuration];
+	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+						   forView:flipView
+							 cache:YES];
+	[flipView addSubview:view];
+    [self addSubview:flipView];
+	[UIView commitAnimations];
+    
+}
 
 
 - (void) dealloc {

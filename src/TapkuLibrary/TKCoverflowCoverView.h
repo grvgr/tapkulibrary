@@ -39,10 +39,15 @@
 	UIImageView *imageView;
 	UIImageView *reflected;
 	CAGradientLayer *gradientLayer;
+    UIView *flipView;
 }
 
 @property (retain,nonatomic) UIImage *image;
 @property (retain,nonatomic) CAGradientLayer *gradientLayer;
 @property (assign,nonatomic) float baseline; // set this property for displaying images w/ different heights
+
+@property (retain,nonatomic) UIView *flipView;
+
+- (void)flipCover:(UIView *)view;
 
 @end

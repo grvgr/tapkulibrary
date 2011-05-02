@@ -110,19 +110,19 @@
     [super viewDidLoad];
 	
 	if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone){
-		covers = [[NSArray alloc] initWithObjects:
+		covers = [[NSMutableArray alloc] initWithObjects:
 				  [UIImage imageNamed:@"cover_2.jpg"],[UIImage imageNamed:@"cover_1.jpg"],
 				  [UIImage imageNamed:@"cover_3.jpg"],[UIImage imageNamed:@"cover_4.jpg"],
 				  [UIImage imageNamed:@"cover_5.jpg"],[UIImage imageNamed:@"cover_6.jpg"],
 				  [UIImage imageNamed:@"cover_7.jpg"],[UIImage imageNamed:@"cover_8.jpg"],
 				  [UIImage imageNamed:@"cover_9.jpeg"],nil];
 	}else{
-		covers = [[NSArray alloc] initWithObjects:
-				  [UIImage imageNamed:@"ipadcover_1.jpg"],[UIImage imageNamed:@"ipadcover_2.jpg"],
+		covers = [[NSMutableArray alloc] initWithObjects:
+				  [UIImage imageNamed:@"ipadcover_2.jpg"],
 				  [UIImage imageNamed:@"ipadcover_3.jpg"],[UIImage imageNamed:@"ipadcover_4.jpg"],
 				  [UIImage imageNamed:@"ipadcover_5.jpg"],[UIImage imageNamed:@"ipadcover_6.jpg"],
 				  [UIImage imageNamed:@"ipadcover_7.jpg"],[UIImage imageNamed:@"ipadcover_8.jpg"],
-				  [UIImage imageNamed:@"ipadcover_9.jpg"],nil];
+				  [UIImage imageNamed:@"ipadcover_9.jpg"], nil];
 	}
 	
 
@@ -177,7 +177,14 @@
 
 - (void) coverflowView:(TKCoverflowView*)coverflowView coverAtIndexWasBroughtToFront:(int)index{
 	NSLog(@"Front %d",index);
+    if( index > ([covers count] - 2) ) {
+        NSLog(@"add more shit");
+        [covers addObject:[UIImage imageNamed:@"ipadcover_1.jpg"]];
+        [coverflow setNumberOfCovers:[covers count]];
+        coverflow.currentIndex = index;
+    }
 }
+
 - (TKCoverflowCoverView*) coverflowView:(TKCoverflowView*)coverflowView coverAtIndex:(int)index{
 	
 	TKCoverflowCoverView *cover = [coverflowView dequeueReusableCoverView];
@@ -202,11 +209,25 @@
 - (void) coverflowView:(TKCoverflowView*)coverflowView coverAtIndexWasSingleTapped:(int)index{
 	TKCoverflowCoverView *cover = [coverflowView coverAtIndex:index];
 	if(cover == nil) return;
-	[UIView beginAnimations:nil context:nil];
+
+    UILabel *flipView = [[UILabel alloc] init];
+    flipView.text = @"details view";
+    flipView.backgroundColor = [UIColor blueColor];
+    flipView.textAlignment = UITextAlignmentCenter;
+    CGRect newFrame = cover.frame;
+    newFrame.size.height = 300;
+    newFrame.size.width = 300;
+    flipView.frame = newFrame;
+    
+    [cover flipCover:flipView];
+    
+/**
+    [UIView beginAnimations:nil context:nil];
 	[UIView setAnimationDuration:1];
 	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:cover cache:YES];
 	[UIView commitAnimations];
-	
+/**/	
+
 	NSLog(@"Single Tap on Index: %d",index);
 }
 
