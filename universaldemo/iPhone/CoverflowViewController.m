@@ -118,7 +118,7 @@
 				  [UIImage imageNamed:@"cover_9.jpeg"],nil];
 	}else{
 		covers = [[NSArray alloc] initWithObjects:
-				  [UIImage imageNamed:@"ipadcover_2.jpg"],[UIImage imageNamed:@"ipadcover_1.jpg"],
+				  [UIImage imageNamed:@"ipadcover_1.jpg"],[UIImage imageNamed:@"ipadcover_2.jpg"],
 				  [UIImage imageNamed:@"ipadcover_3.jpg"],[UIImage imageNamed:@"ipadcover_4.jpg"],
 				  [UIImage imageNamed:@"ipadcover_5.jpg"],[UIImage imageNamed:@"ipadcover_6.jpg"],
 				  [UIImage imageNamed:@"ipadcover_7.jpg"],[UIImage imageNamed:@"ipadcover_8.jpg"],
@@ -128,21 +128,16 @@
 
 	
 
-	[coverflow setNumberOfCovers:580];
-	
-	
-
-	
-	
-	
+	[coverflow setNumberOfCovers:[covers count]];
 }
+
 - (void) viewWillAppear:(BOOL)animated{
 	[super viewWillAppear:animated];
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque]; 
 }
 - (void) viewDidAppear:(BOOL)animated{
 	[super viewDidAppear:animated];
-	[coverflow bringCoverAtIndexToFront:[covers count]*2 animated:NO];
+	[coverflow bringCoverAtIndexToFront:0 animated:NO];
 }
 - (void) viewWillDisappear:(BOOL)animated{
 	[super viewWillDisappear:animated];
