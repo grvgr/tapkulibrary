@@ -16,3 +16,4 @@ TapkuLibraryDemo/build/**
 src/TapkuLibrary.xcodeproj/xcuserdata/**
 universaldemo/universaldemo.xcodeproj/project.xcworkspace/xcuserdata/**
 universaldemo/universaldemo.xcodeproj/xcuserdata/**
+*.patch
