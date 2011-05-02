@@ -68,10 +68,9 @@
 	coverflow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	coverflow.coverflowDelegate = self;
 	coverflow.dataSource = self;
-	if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad){
-		coverflow.coverSpacing = 100;
-		coverflow.coverSize = CGSizeMake(300, 300);
-	}
+    coverflow.coverAngle = 0.00;
+    coverflow.coverSpacing = 300;
+    coverflow.coverSize = CGSizeMake(300, 300);
 	
 	[self.view addSubview:coverflow];
 	
