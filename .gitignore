@@ -13,3 +13,6 @@ TapkuLibraryDemo/build/**
 # osx noise
 .DS_Store
 #profile
+src/TapkuLibrary.xcodeproj/xcuserdata/**
+universaldemo/universaldemo.xcodeproj/project.xcworkspace/xcuserdata/**
+universaldemo/universaldemo.xcodeproj/xcuserdata/**

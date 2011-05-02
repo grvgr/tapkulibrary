@@ -204,9 +204,8 @@
 	return cover;
 	
 }
-- (void) coverflowView:(TKCoverflowView*)coverflowView coverAtIndexWasDoubleTapped:(int)index{
-	
-	
+
+- (void) coverflowView:(TKCoverflowView*)coverflowView coverAtIndexWasSingleTapped:(int)index{
 	TKCoverflowCoverView *cover = [coverflowView coverAtIndex:index];
 	if(cover == nil) return;
 	[UIView beginAnimations:nil context:nil];
@@ -214,10 +213,7 @@
 	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:cover cache:YES];
 	[UIView commitAnimations];
 	
-	NSLog(@"Index: %d",index);
-	
-
-	
+	NSLog(@"Single Tap on Index: %d",index);
 }
 
 @end

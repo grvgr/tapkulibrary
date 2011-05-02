@@ -394,10 +394,10 @@
 	UITouch *touch = [touches anyObject];
 	
 	if(touch.view == currentTouch){
-		if(touch.tapCount > 1 && currentIndex == [coverViews indexOfObject:currentTouch]){
+		if(touch.tapCount == 1 && currentIndex == [coverViews indexOfObject:currentTouch]){
 
-			if([coverflowDelegate respondsToSelector:@selector(coverflowView:coverAtIndexWasDoubleTapped:)])
-				[coverflowDelegate coverflowView:self coverAtIndexWasDoubleTapped:currentIndex];
+			if([coverflowDelegate respondsToSelector:@selector(coverflowView:coverAtIndexWasSingleTapped:)])
+				[coverflowDelegate coverflowView:self coverAtIndexWasSingleTapped:currentIndex];
 			
 		}else{
 			int index = [coverViews indexOfObject:currentTouch];
