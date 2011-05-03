@@ -176,11 +176,13 @@
 
 
 - (void) coverflowView:(TKCoverflowView*)coverflowView coverAtIndexWasBroughtToFront:(int)index{
-    if( index > ([covers count] - 2) ) {
-        [covers addObject:[UIImage imageNamed:@"ipadcover_1.jpg"]];
-        [coverflow setNumberOfCovers:[covers count]];
-        coverflow.currentIndex = index;
-    }
+//    if( index > ([covers count] - 2) ) {
+//        UIImage *rockStart = [UIImage imageNamed:@"ipadcover_1.jpg"];
+//        NSLog(@"%@", rockStart);
+//        [covers addObject:rockStart];
+//        [coverflow setNumberOfCovers:[covers count]];
+//        coverflow.currentIndex = index;
+//    }
 }
 
 - (TKCoverflowCoverView*) coverflowView:(TKCoverflowView*)coverflowView coverAtIndex:(int)index{
@@ -196,20 +198,20 @@
 }
 
 - (void) coverflowView:(TKCoverflowView*)coverflowView coverAtIndexWasSingleTapped:(int)index{
+    NSLog(@"%d",index);
 	TKCoverflowCoverView *cover = [coverflowView coverAtIndex:index];
 	if(cover == nil) return;
 
+    if(!cover.flipped){
     UILabel *flipView = [[UILabel alloc] initWithFrame:cover.frame];
     flipView.text = [[NSString alloc] initWithFormat:@"Details view %d", index];
     flipView.backgroundColor = [UIColor blueColor];
     flipView.textAlignment = UITextAlignmentCenter;
-    CGRect newFrame = cover.frame;
-    newFrame.size.height = cover.frame.size.height;
-    newFrame.size.width = cover.frame.size.width;
-    flipView.frame = newFrame;
+    cover.flipView = flipView;
+        [flipView release];
+    }
     
-    [cover flipCover:flipView];
-    
+    [cover flipCover];
 }
 
 @end

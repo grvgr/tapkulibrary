@@ -37,7 +37,7 @@
 
 
 @implementation TKCoverflowCoverView
-@synthesize baseline,gradientLayer,flipView;
+@synthesize baseline,gradientLayer,flipView, flipped;
 
 
 - (id) initWithFrame:(CGRect)frame {
@@ -62,7 +62,6 @@
 
 
 - (void) setImage:(UIImage *)img{
-    NSLog(@"Came here");
 	UIImage *image = img;
 	[image release];
 	image = [img retain];
@@ -88,8 +87,7 @@
 	[self setNeedsDisplay];
 }
 
-- (void)flipCover:(UIView *)view {
-    NSLog(@"FLIPPED");
+- (void)flipCover {
     double animationDuration = 0.8;
     if(flipped){
         // Animate flip of cover image out of view
@@ -109,11 +107,8 @@
                                forView:self
                                  cache:YES];
         [UIView commitAnimations];
-        flipView = nil;
-        [flipView release];
         flipped = false;
     }else{
-        flipView = view;
         flipView.frame = imageView.frame;
         
         // Animate flip of cover image out of view
