@@ -50,19 +50,13 @@
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.width)];
     [self addSubview:imageView];
     
-    reflected =  [[UIImageView alloc] initWithFrame:CGRectMake(0, self.frame.size.width, self.frame.size.width, self.frame.size.width)];
-    reflected.transform = CGAffineTransformScale(reflected.transform, 1, -1);
-    [self addSubview:reflected];
-
     gradientLayer = [CAGradientLayer layer];
     gradientLayer.colors = [NSArray arrayWithObjects:(id)[UIColor colorWithWhite:0 alpha:0.5].CGColor,(id)[UIColor colorWithWhite:0 alpha:1].CGColor,nil];
     gradientLayer.startPoint = CGPointMake(0,0);
     gradientLayer.endPoint = CGPointMake(0,0.3);
     gradientLayer.frame = CGRectMake(0, self.frame.size.width, self.frame.size.width, self.frame.size.width);
     [self.layer addSublayer:gradientLayer];
-    
-	flipView = [[UIView alloc] initWithFrame:self.frame];    
-    
+    flipped = NO;
     return self;
 }
 
@@ -85,9 +79,6 @@
 	
 	
 	gradientLayer.frame = CGRectMake(0, y + h, w, h);
-	
-	reflected.frame = CGRectMake(0, y + h, w, h);
-	reflected.image = image;
 }
 - (UIImage*) image{
 	return imageView.image;
@@ -98,40 +89,54 @@
 }
 
 - (void)flipCover:(UIView *)view {
-	// Save selected view state before animation
-	CGRect flippedViewFrame = CGRectMake(
-										 (flipView.frame.size.width-view.frame.size.width)/2,
-										 flipView.frame.origin.y,
-										 view.frame.size.width,
-										 view.frame.size.height);
-	view.frame = flippedViewFrame;
-    
-	double animationDuration = 0.8;
-    
-	// Animate flip of cover image out of view
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:animationDuration];
-	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
-						   forView:self
-							 cache:YES];
-	[imageView removeFromSuperview];
-	[UIView commitAnimations];
-    
-	// Animate flip of flipped view into view
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:animationDuration];
-	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
-						   forView:flipView
-							 cache:YES];
-	[flipView addSubview:view];
-    [self addSubview:flipView];
-	[UIView commitAnimations];
-    
+    double animationDuration = 0.8;
+    if(flipped){
+        // Animate flip of cover image out of view
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:animationDuration];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+                               forView:self
+                                 cache:YES];
+        [flipView removeFromSuperview];
+        [UIView commitAnimations];
+        
+        // Animate flip of flipped view into view
+        [self addSubview:imageView];
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:animationDuration];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+                               forView:self
+                                 cache:YES];
+        [UIView commitAnimations];
+        flipped = false;
+    }else{
+        flipView = view;
+        flipView.frame = imageView.frame;
+        
+        // Animate flip of cover image out of view
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:animationDuration];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+                               forView:self
+                                 cache:YES];
+        [imageView removeFromSuperview];
+        [UIView commitAnimations];
+        
+        // Animate flip of flipped view into view
+        [self addSubview:flipView];
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:animationDuration];
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+                               forView:self
+                                 cache:YES];
+        [UIView commitAnimations];
+        flipped = true;
+    }
+	
 }
 
 
 - (void) dealloc {
-	[reflected release];
 	[imageView release];
     [super dealloc];
 }

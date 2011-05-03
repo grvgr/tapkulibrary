@@ -80,9 +80,6 @@
 	*/
 	
 	
-	NSLog(@"HELLO");
-
-	
 	return YES;
 }
 

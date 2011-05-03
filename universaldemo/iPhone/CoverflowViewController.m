@@ -176,9 +176,7 @@
 
 
 - (void) coverflowView:(TKCoverflowView*)coverflowView coverAtIndexWasBroughtToFront:(int)index{
-	NSLog(@"Front %d",index);
     if( index > ([covers count] - 2) ) {
-        NSLog(@"add more shit");
         [covers addObject:[UIImage imageNamed:@"ipadcover_1.jpg"]];
         [coverflow setNumberOfCovers:[covers count]];
         coverflow.currentIndex = index;
@@ -186,49 +184,32 @@
 }
 
 - (TKCoverflowCoverView*) coverflowView:(TKCoverflowView*)coverflowView coverAtIndex:(int)index{
-	
 	TKCoverflowCoverView *cover = [coverflowView dequeueReusableCoverView];
-	
-	
-	
 	if(cover == nil){
 		BOOL phone = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone;
 		CGRect rect = phone ? CGRectMake(0, 0, 224, 300) : CGRectMake(0, 0, 300, 600);
-
-		
 		cover = [[[TKCoverflowCoverView alloc] initWithFrame:rect] autorelease]; // 224
-		cover.baseline = 224;
-		
+		cover.baseline = -500;
 	}
 	cover.image = [covers objectAtIndex:index%[covers count]];
-
 	return cover;
-	
 }
 
 - (void) coverflowView:(TKCoverflowView*)coverflowView coverAtIndexWasSingleTapped:(int)index{
 	TKCoverflowCoverView *cover = [coverflowView coverAtIndex:index];
 	if(cover == nil) return;
 
-    UILabel *flipView = [[UILabel alloc] init];
+    UILabel *flipView = [[UILabel alloc] initWithFrame:cover.frame];
     flipView.text = @"details view";
     flipView.backgroundColor = [UIColor blueColor];
     flipView.textAlignment = UITextAlignmentCenter;
     CGRect newFrame = cover.frame;
-    newFrame.size.height = 300;
-    newFrame.size.width = 300;
+    newFrame.size.height = cover.frame.size.height;
+    newFrame.size.width = cover.frame.size.width;
     flipView.frame = newFrame;
     
     [cover flipCover:flipView];
     
-/**
-    [UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:1];
-	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:cover cache:YES];
-	[UIView commitAnimations];
-/**/	
-
-	NSLog(@"Single Tap on Index: %d",index);
 }
 
 @end

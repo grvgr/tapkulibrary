@@ -37,9 +37,8 @@
 	float baseline;
 	
 	UIImageView *imageView;
-	UIImageView *reflected;
-	CAGradientLayer *gradientLayer;
     UIView *flipView;
+    BOOL flipped;
 }
 
 @property (retain,nonatomic) UIImage *image;

@@ -66,8 +66,6 @@
 
 
 	if(self.popoverController!=nil){
-		NSLog(@"HELLO");
-		
 		UIBarButtonItem *item = [[self.toolbar items] objectAtIndex:0];
 		
 		
@@ -77,7 +75,6 @@
 		if(self.mainController.toolbarItems!=nil){
 			[items addObjectsFromArray:self.mainController.toolbarItems];
 		}
-		NSLog(@"%@",items);
 		[self.toolbar setItems:items animated:YES];
 
 		
