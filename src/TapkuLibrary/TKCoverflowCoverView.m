@@ -62,7 +62,7 @@
 
 
 - (void) setImage:(UIImage *)img{
-	
+    NSLog(@"Came here");
 	UIImage *image = img;
 	[image release];
 	image = [img retain];
@@ -89,6 +89,7 @@
 }
 
 - (void)flipCover:(UIView *)view {
+    NSLog(@"FLIPPED");
     double animationDuration = 0.8;
     if(flipped){
         // Animate flip of cover image out of view
@@ -108,6 +109,8 @@
                                forView:self
                                  cache:YES];
         [UIView commitAnimations];
+        flipView = nil;
+        [flipView release];
         flipped = false;
     }else{
         flipView = view;
@@ -139,6 +142,7 @@
 - (void) dealloc {
 	[imageView release];
     [super dealloc];
+    flipped = false;
 }
 
 

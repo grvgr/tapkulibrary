@@ -200,7 +200,7 @@
 	if(cover == nil) return;
 
     UILabel *flipView = [[UILabel alloc] initWithFrame:cover.frame];
-    flipView.text = @"details view";
+    flipView.text = [[NSString alloc] initWithFormat:@"Details view %d", index];
     flipView.backgroundColor = [UIColor blueColor];
     flipView.textAlignment = UITextAlignmentCenter;
     CGRect newFrame = cover.frame;
